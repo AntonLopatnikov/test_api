@@ -1,10 +1,11 @@
 name: test api autotests
 
+
 on:
   workflow_dispatch:
     inputs:
       deployment_target:
-        description: 'Test scope: all, smoke, post_negative, regression (put/patch)'
+        description: 'Test scope: all, post, post_negative, put, patch'
         required: true
         default: 'all'
         type: choice
@@ -39,21 +40,21 @@ jobs:
         if: ${{ github.event.inputs.deployment_target == 'all' }}
         run: pytest --alluredir=allure-results -v
 
-      - name: Run smoke tests (post)
+      - name: Run tests with @pytest.mark.post
         if: ${{ github.event.inputs.deployment_target == 'post' }}
-        run: pytest -m smoke --alluredir=allure-results -v
+        run: pytest -m post --alluredir=allure-results -v
 
-      - name: Run negative smoke tests
+      - name: Run tests with @pytest.mark.post_negative
         if: ${{ github.event.inputs.deployment_target == 'post_negative' }}
-        run: pytest -m smoke --alluredir=allure-results -v  # Уточните маркер, если нужен отдельный
+        run: pytest -m post_negative --alluredir=allure-results -v
 
-      - name: Run regression tests (put)
+      - name: Run tests with @pytest.mark.put
         if: ${{ github.event.inputs.deployment_target == 'put' }}
-        run: pytest -m regression --alluredir=allure-results -v
+        run: pytest -m put --alluredir=allure-results -v
 
-      - name: Run regression tests (patch)
+      - name: Run tests with @pytest.mark.patch
         if: ${{ github.event.inputs.deployment_target == 'patch' }}
-        run: pytest -m regression --alluredir=allure-results -v
+        run: pytest -m patch --alluredir=allure-results -v
 
       - name: Setup Java 17
         uses: actions/setup-java@v5
