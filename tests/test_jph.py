@@ -1,5 +1,5 @@
 import pytest
-import requests
+
 
 TEST_DATA = [{"title": "foo", "body": "bar", "userId": 1},
              {"title": "foof", "body": "bar321", "userId": 1}
