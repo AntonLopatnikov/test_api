@@ -1,4 +1,4 @@
-from ..endpoints.endpoint import Endpoint
+from .endpoints.endpoint import Endpoint
 import requests
 import allure
 
